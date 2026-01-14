@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FManagement.Services.QuangND\FManagement.Services.QuangND.csproj" />
+  </ItemGroup>
+
 </Project>

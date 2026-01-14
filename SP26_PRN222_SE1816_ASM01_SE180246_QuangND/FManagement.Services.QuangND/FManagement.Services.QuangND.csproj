@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FManagement.Repositories.QuangND\FManagement.Repositories.QuangND.csproj" />
+  </ItemGroup>
+
 </Project>
