@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FManagement.Entities.QuangND.Entities;
-namespace FManagement.Repositories.QuangND.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
+namespace FManagement.Entities.QuangND.Entities;
 
 public partial class FranchiseManagementContext : DbContext
 {
@@ -51,9 +53,21 @@ public partial class FranchiseManagementContext : DbContext
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
+    public virtual DbSet<SystemUserAccount> SystemUserAccounts { get; set; }
+
+    public static string GetConnectionString(string connectionStringName)
+    {
+        var config = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        string connectionString = config.GetConnectionString(connectionStringName);
+        return connectionString;
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=12345;database=FranchiseManagement;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer(GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -465,6 +479,27 @@ public partial class FranchiseManagementContext : DbContext
             entity.Property(e => e.PhoneNumber).HasMaxLength(20);
             entity.Property(e => e.SupplierName).HasMaxLength(100);
             entity.Property(e => e.TaxCode).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<SystemUserAccount>(entity =>
+        {
+            entity.HasKey(e => e.UserAccountId);
+
+            entity.ToTable("System.UserAccount");
+
+            entity.Property(e => e.UserAccountId).HasColumnName("UserAccountID");
+            entity.Property(e => e.ApplicationCode).HasMaxLength(50);
+            entity.Property(e => e.CreatedBy).HasMaxLength(50);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Email).HasMaxLength(150);
+            entity.Property(e => e.EmployeeCode).HasMaxLength(50);
+            entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.ModifiedBy).HasMaxLength(50);
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.Password).HasMaxLength(100);
+            entity.Property(e => e.Phone).HasMaxLength(50);
+            entity.Property(e => e.RequestCode).HasMaxLength(50);
+            entity.Property(e => e.UserName).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);

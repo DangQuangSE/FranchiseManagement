@@ -24,4 +24,8 @@
     <ProjectReference Include="..\FManagement.Entities.QuangND\FManagement.Entities.QuangND.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DBContext\" />
+  </ItemGroup>
+
 </Project>
