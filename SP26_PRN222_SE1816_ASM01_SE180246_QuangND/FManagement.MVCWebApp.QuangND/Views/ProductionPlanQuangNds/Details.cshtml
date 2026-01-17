@@ -1,0 +1,90 @@
+﻿@model FManagement.Entities.QuangND.Entities.ProductionPlanQuangNd
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ProductionPlanQuangNd</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlanDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlanDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlanStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlanStatus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PriorityLevel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PriorityLevel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalExpectedQuantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalExpectedQuantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ActualProducedQuantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ActualProducedQuantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BatchNotes)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BatchNotes)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastModifiedBy)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kitchen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kitchen.KitchenName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StoreOrderItem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StoreOrderItem.OrderItemId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PlanId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

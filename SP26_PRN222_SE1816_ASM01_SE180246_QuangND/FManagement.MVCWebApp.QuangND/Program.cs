@@ -1,8 +1,12 @@
+using FManagement.Services.QuangND;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+//// Add dependency injections (DI) for QuangND services
+builder.Services.AddScoped<IProductPlanQuangNDService, ProductPlanQuangNDService>();
+builder.Services.AddScoped<StoreOrderItemQuangNDService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

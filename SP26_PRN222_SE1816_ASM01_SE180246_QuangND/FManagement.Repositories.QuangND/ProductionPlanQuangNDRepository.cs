@@ -30,17 +30,19 @@ namespace FManagement.Repositories.QuangND
             .FirstOrDefaultAsync(p => p.PlanId == id);
             return item ?? new ProductionPlanQuangNd();
         }
-        public async Task<List<ProductionPlanQuangNd>> SearchAsync(int id, int quantityOrdered, string PlanStatus) //chose 2 attribute from main table, 1 from foreign table
+        public async Task<List<ProductionPlanQuangNd>> SearchAsync(int id, int quantityOrdered, string? planStatus)
         {
-            var items = await _context.ProductionPlanQuangNds.Include(p => p.Kitchen)
-            .Include(p => p.StoreOrderItem)
-            .Include(p => p.ProductBatches).
-            Where(c =>
-            ((c.PlanId == id || id == null || id == 0) &&
-            (c.StoreOrderItem.QuantityOrdered == quantityOrdered || quantityOrdered == null || quantityOrdered == 0) &&
-            (c.PlanStatus.Contains(PlanStatus) || string.IsNullOrEmpty(PlanStatus))))
-            .ToListAsync();
-            return items;
+            return await _context.ProductionPlanQuangNds
+                .Include(p => p.Kitchen)
+                .Include(p => p.StoreOrderItem)
+                .Include(p => p.ProductBatches)
+                .Where(p =>
+                    (id <= 0 || p.PlanId == id) &&
+                    (quantityOrdered <= 0 || (p.StoreOrderItem != null && p.StoreOrderItem.QuantityOrdered == quantityOrdered)) &&
+                    (string.IsNullOrWhiteSpace(planStatus) || (p.PlanStatus != null && p.PlanStatus.Contains(planStatus)))
+                )
+                .ToListAsync();
         }
+
     }
 }

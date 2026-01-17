@@ -1,0 +1,101 @@
+﻿@model IEnumerable<FManagement.Entities.QuangND.Entities.ProductionPlanQuangNd>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlanDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlanStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriorityLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalExpectedQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualProducedQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BatchNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kitchen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreOrderItem)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlanDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlanStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriorityLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalExpectedQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualProducedQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatchNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kitchen.KitchenName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreOrderItem.OrderItemId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PlanId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PlanId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PlanId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
