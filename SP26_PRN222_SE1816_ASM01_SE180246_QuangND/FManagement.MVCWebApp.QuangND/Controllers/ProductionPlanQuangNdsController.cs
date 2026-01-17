@@ -35,7 +35,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
             var items = await _productPlanQuangNDService.GetAllAsync();
             return View(items);
         }
-        /*
+        
         // GET: ProductionPlanQuangNds/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -43,11 +43,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
             {
                 return NotFound();
             }
-
-            var productionPlanQuangNd = await _context.ProductionPlanQuangNds
-                .Include(p => p.Kitchen)
-                .Include(p => p.StoreOrderItem)
-                .FirstOrDefaultAsync(m => m.PlanId == id);
+           var productionPlanQuangNd = await _productPlanQuangNDService.GetByIdAysnc(id.Value);
             if (productionPlanQuangNd == null)
             {
                 return NotFound();
@@ -55,6 +51,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
 
             return View(productionPlanQuangNd);
         }
+        /*
 
         // GET: ProductionPlanQuangNds/Create
         public IActionResult Create()
