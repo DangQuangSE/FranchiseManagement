@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
@@ -99,3 +99,12 @@
 }
     </tbody>
 </table>
+<script src="/path/to/cdn/jquery.min.js"></script>
+<script src="/path/to/table-pagination.js"></script>
+<script>
+$(function(){
+  $('#myTable').createTablePagination({
+    rowPerPage: 20,
+  });
+});
+</script>
