@@ -27,8 +27,7 @@
                 $paginationParentContainer.append($table.clone());
             }
             $('.pagintaion-container-' + $tableId).remove();
-            // $table = $(tableId);
-            $('#' + $tableId).find('tr').show();
+            $('#' + $tableId).find('tbody tr').show();
         }
 
         $table = $('#' + $tableId);
@@ -44,11 +43,9 @@
         var $transitionDurationMilliSec = settings.transitionDuration;
         var $tableWidth = $table.width();
         var $parentContainer = $table.parent();
-        var $totalRow = $table.find('tr').length - 1;
+        var $totalRow = $table.find('tbody tr').length;
         var $totalPage = Math.ceil($totalRow / $rowPerPage);
         var $tableIndex = $table.index();
-
-
 
         if ($rowPerPage > $totalRow) {
             console.log('check your data, your row per page is bigger then total row');
@@ -79,17 +76,15 @@
                             }';
         }
 
-
         //create style for pagination
         const style = document.createElement('style');
         style.setAttribute('id', 'pagintaion-' + $tableId);
-        //apply styling to pagination
         style.textContent = `.page-list-table-` + $tableId + ` {
             min-width:` + $tableWidth + `px;
             margin-top:20px;
             display:flex;
             align-items:center;
-            font-size: 16px;
+            font-size: 14px;
             ` + $alignPagination + `;
         }
 
@@ -98,32 +93,14 @@
         .table-pagination-next-btn-` + $tableId + `{
             color:` + $fontColor + `;
             text-decoration:none;
-            height:20px;
             display:flex;
             align-items:center;
-            padding:6px 10px;
+            gap: 4px;
+            padding:8px 12px;
             cursor:pointer;
             user-select: none;
+            transition: all 0.2s ease;
             ` + $paginationStyleText + `
-        
-
-        .table-pagination-prev-btn-` + $tableId + `::before,
-        .table-pagination-next-btn-` + $tableId + `::after{
-            font-weight:bold;
-            color:` + $paginationColor + `;
-            white-space: pre;
-            font-size: 32px;
-            position: relative;
-            top: -4px;
-        }
-
-        .table-pagination-next-btn-` + $tableId + `::after{
-            content:' ›';
-        }
-
-        .table-pagination-prev-btn-` + $tableId + `::before{
-            content:'‹ ';
-        }
 
         .more-btn-first-` + $tableId + `,
         .more-btn-last-` + $tableId + `{
@@ -176,15 +153,12 @@
         .table-pagination-jump-input-` + $tableId + ` {
             -moz-appearance: textfield;
         }
-
     `;
 
         document.head.appendChild(style);
 
-
         if ($parentContainer.children().length > $table.index() + 1) {
             $parentContainer.children().eq($tableIndex + 1).before('<div class="pagintaion-container-' + $tableId + '"></div>');
-
         } else {
             $parentContainer.append('<div class="pagintaion-container-' + $tableId + '"></div>');
         }
@@ -194,14 +168,14 @@
 
         //assign the Row Start and Row End for each page.
         for (i = 0; i < $totalPage; i++) {
-            var $rowStart = (i * $rowPerPage) + 1;
-            var $rowEnd = ((i + 1) * $rowPerPage);
-            if ($rowEnd > $totalRow) $rowEnd = $totalRow;
+            var $rowStart = (i * $rowPerPage);
+            var $rowEnd = ((i + 1) * $rowPerPage) - 1;
+            if ($rowEnd > $totalRow - 1) $rowEnd = $totalRow - 1;
             var $pageDisplayObject = { rowStart: $rowStart, rowEnd: $rowEnd };
             $pageDisplay[i] = $pageDisplayObject;
         }
 
-        $table.find('tr').not(':first').each(function() {
+        $table.find('tbody tr').each(function() {
             if ($(this).index() >= $pageDisplay[0].rowStart && $(this).index() <= $pageDisplay[0].rowEnd) {
                 $(this).show();
             } else {
@@ -211,12 +185,12 @@
 
         //create pagination
         $parentContainer.append('<div class="page-list-table-' + $tableId + '"></div>');
-        $('.page-list-table-' + $tableId).append('<a class="table-pagination-prev-btn-' + $tableId + '">Prev</a>');
+        $('.page-list-table-' + $tableId).append('<a class="table-pagination-prev-btn-' + $tableId + '"><i class="bi bi-chevron-left"></i> Prev</a>');
 
         for (i = 0; i < $totalPage; i++) {
             $('.page-list-table-' + $tableId).append('<a class="table-pagination-pagination-num-' + $tableId + '"  data-page-id="' + (i + 1) + '" >' + (i + 1) + '</a>');
         }
-        $('.page-list-table-' + $tableId).append('<a class="table-pagination-next-btn-' + $tableId + '">Next</a>');
+        $('.page-list-table-' + $tableId).append('<a class="table-pagination-next-btn-' + $tableId + '">Next <i class="bi bi-chevron-right"></i></a>');
 
         $('.table-pagination-pagination-num-' + $tableId).eq(0).after('<a class="more-btn-first-' + $tableId + '">..</a>');
         $('.table-pagination-pagination-num-' + $tableId).eq(-1).before('<a class="more-btn-last-' + $tableId + '">..</a>');
@@ -225,8 +199,6 @@
         if ($jumpPage == true) {
             $('.page-list-table-' + $tableId).append('<div class="table-pagination-jump-container-' + $tableId + '"><input class="table-pagination-jump-input-' + $tableId + '" type="number" max="' + $totalPage + '"> of ' + $totalPage + '</div>');
         }
-
-
 
         //show the pagination number according to size
         var $jumpPageSpace;
@@ -237,7 +209,6 @@
         $availableSpace = $tableWidth - $('.table-pagination-prev-btn-' + $tableId).outerWidth() - $('.table-pagination-next-btn-' + $tableId).outerWidth() - $jumpPageSpace;
 
         var $numBlockSize = $('.table-pagination-pagination-num-' + $tableId).eq(-1).outerWidth();
-
         var $avaliableBlock = Math.floor($availableSpace / $numBlockSize);
 
         $pageStart = 1;
@@ -247,7 +218,6 @@
         } else {
             $pageEnd = $totalPage;
         }
-
 
         rearrangePagination();
 
@@ -270,7 +240,7 @@
                 $currentActivePage = parseInt(thisButton.val());
             }
 
-            $table.find('tr').not(':first').each(function() {
+            $table.find('tbody tr').each(function() {
                 if ($(this).index() >= $pageDisplay[$currentActivePage - 1].rowStart && $(this).index() <= $pageDisplay[$currentActivePage - 1].rowEnd) {
                     $(this).fadeIn($transitionDurationMilliSec);
                 } else {
@@ -280,7 +250,6 @@
 
             $('.page-list-table-' + $tableId).find('.table-pagination-pagination-num-' + $tableId).removeClass("active");
             $('.table-pagination-pagination-num-' + $tableId + '[data-page-id="' + $currentActivePage + '"]').addClass("active");
-
         }
 
         function rearrangePagination() {
@@ -306,14 +275,12 @@
                 if ($pageEnd > $totalPage) {
                     $pageEnd = $totalPage;
                 }
-
             }
             if ($pageEnd > $totalPage) {
                 $pageStart = $pageStart - ($pageEnd - $totalPage);
                 $pageEnd = $totalPage;
                 if ($pageStart < 1) {
                     $pageStart = 1;
-
                 }
             }
 
@@ -326,30 +293,24 @@
             });
 
             if ($pageStart == 1) {
-                // $(".table-pagination-first-btn").hide();
                 $('.more-btn-first-' + $tableId).hide();
             } else {
-                // $(".table-pagination-first-btn").show();
                 $('.table-pagination-pagination-num-' + $tableId + '[data-page-id="1"]').show();
                 $('.more-btn-first-' + $tableId).show();
             }
 
             if ($pageEnd == $totalPage) {
-                // $(".table-pagination-last-btn").hide();
                 $('.more-btn-last-' + $tableId).hide();
             } else {
-                // $(".table-pagination-last-btn").show();
                 $('.table-pagination-pagination-num-' + $tableId + '[data-page-id="' + $totalPage + '"]').show();
                 $('.more-btn-last-' + $tableId).show();
             }
 
             $('.table-pagination-jump-input-' + $tableId).val($currentActivePage);
-
         }
 
         //Defaultly set the 1st pagination active
         $('.table-pagination-pagination-num-' + $tableId + '[data-page-id="1"]').addClass("active");
-
 
         //change page when click on number pagination
         $('.table-pagination-pagination-num-' + $tableId).on("click", function() {
@@ -378,9 +339,6 @@
                 }
             }
         });
-
-
     }
-
 
 }(jQuery));
