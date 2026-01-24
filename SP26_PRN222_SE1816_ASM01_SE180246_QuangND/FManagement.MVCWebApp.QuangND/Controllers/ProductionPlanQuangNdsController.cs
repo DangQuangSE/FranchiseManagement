@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FManagement.Entities.QuangND.Entities;
 using FManagement.Services.QuangND;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FManagement.MVCWebApp.QuangND.Controllers
 {
+    [Authorize]
     public class ProductionPlanQuangNdsController : Controller
     {
         // private readonly FranchiseManagementContext _context;
@@ -54,6 +56,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
 
 
         // GET: ProductionPlanQuangNds/Create
+        [Authorize(Roles ="1,2")]
         public async Task<IActionResult> Create()
         {
             var StoreOrderItemQuangNds = await _storeOrderItemQuangNDService.GetAllAsync();
