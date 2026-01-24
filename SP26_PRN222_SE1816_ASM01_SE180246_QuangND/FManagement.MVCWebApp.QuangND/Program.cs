@@ -1,4 +1,5 @@
 using FManagement.Services.QuangND;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,15 @@ builder.Services.AddControllersWithViews();
 //// Add dependency injections (DI) for QuangND services
 builder.Services.AddScoped<IProductPlanQuangNDService, ProductPlanQuangNDService>();
 builder.Services.AddScoped<StoreOrderItemQuangNDService>();
+// Configure cookie authentication
+builder.Services.AddAuthentication()
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+    {
+        options.LoginPath = new PathString("/Account/Login");
+        options.AccessDeniedPath = new PathString("/Account/Forbidden");
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
