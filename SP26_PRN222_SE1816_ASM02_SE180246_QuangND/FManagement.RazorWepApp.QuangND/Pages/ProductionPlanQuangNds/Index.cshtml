@@ -216,6 +216,11 @@
         opacity: 0.5;
     }
 
+    .row-deleting {
+        opacity: 0.5;
+        transition: opacity 0.3s ease-out;
+    }
+
     @@media (max-width: 768px) {
         .page-header h1 {
             font-size: 1.5rem;
@@ -246,7 +251,7 @@
 </p>
 
 <div class="table-container">
-    <table class="table">
+    <table class="table" id="productionPlansTable">
         <thead>
             <tr>
                 <th>
@@ -288,9 +293,9 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="productionPlansTableBody">
     @foreach (var item in Model.ProductionPlanQuangNd) {
-            <tr>
+            <tr data-plan-id="@item.PlanId">
                 <td>
                     @Html.DisplayFor(modelItem => item.PlanDate)
                 </td>
@@ -348,4 +353,50 @@
 
 @section Scripts {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/productionPlanHub")
+            .withAutomaticReconnect()
+            .build();
+
+        connection.on("ProductionPlanDeleted", function (planId) {
+            console.log("Production plan deleted: " + planId);
+            
+            const row = document.querySelector(`tr[data-plan-id="${planId}"]`);
+            if (row) {
+                row.classList.add('row-deleting');
+                setTimeout(() => {
+                    row.remove();
+                    
+                    const tbody = document.getElementById('productionPlansTableBody');
+                    if (tbody.children.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="13" class="text-center">No production plans found.</td></tr>';
+                    }
+                }, 300);
+            }
+        });
+
+        connection.start()
+            .then(() => {
+                console.log("SignalR Connected to Production Plan Hub");
+            })
+            .catch(err => {
+                console.error("SignalR Connection Error: ", err);
+                setTimeout(() => connection.start(), 5000);
+            });
+
+        connection.onreconnecting((error) => {
+            console.log("SignalR Reconnecting...", error);
+        });
+
+        connection.onreconnected((connectionId) => {
+            console.log("SignalR Reconnected. Connection ID: " + connectionId);
+        });
+
+        connection.onclose((error) => {
+            console.log("SignalR Connection Closed", error);
+            setTimeout(() => connection.start(), 5000);
+        });
+    </script>
 }

@@ -7,14 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FManagement.Entities.QuangND.Entities;
 using FManagement.Services.QuangND;
+using Microsoft.AspNetCore.SignalR;
+using FManagement.RazorWepApp.QuangND.Hubs;
 
 namespace FManagement.RazorWepApp.QuangND.Pages.ProductionPlanQuangNds
 {
     public class DeleteModel : PageModel
     {
         private readonly IProductPlanQuangNDService _productPlanQuangNDService;
-        public DeleteModel(IProductPlanQuangNDService productionPlanSV)
-          => _productPlanQuangNDService = productionPlanSV;
+        private readonly IHubContext<ProductionPlanHub> _hubContext;
+
+        public DeleteModel(IProductPlanQuangNDService productionPlanSV, IHubContext<ProductionPlanHub> hubContext)
+        {
+            _productPlanQuangNDService = productionPlanSV;
+            _hubContext = hubContext;
+        }
 
         [BindProperty]
         public ProductionPlanQuangNd ProductionPlanQuangNd { get; set; } = default!;
@@ -49,6 +56,7 @@ namespace FManagement.RazorWepApp.QuangND.Pages.ProductionPlanQuangNds
             var result = await _productPlanQuangNDService.DeleteAsync(id.Value);
             if (result)
             {
+                await _hubContext.Clients.All.SendAsync("ProductionPlanDeleted", id.Value);
                 return RedirectToPage("./Index");
             }
 

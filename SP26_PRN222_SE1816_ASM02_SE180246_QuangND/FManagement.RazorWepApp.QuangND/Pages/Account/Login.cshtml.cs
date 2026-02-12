@@ -43,7 +43,7 @@ namespace FManagement.RazorWepApp.QuangND.Pages.Account
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-                Response.Cookies.Append("UserName", userAccount.UserName);
+                Response.Cookies.Append("UserName", UserName ?? string.Empty);
 
                 // After signing then redirect to default page
                 return RedirectToPage("/ProductionPlanQuangNds/Index");

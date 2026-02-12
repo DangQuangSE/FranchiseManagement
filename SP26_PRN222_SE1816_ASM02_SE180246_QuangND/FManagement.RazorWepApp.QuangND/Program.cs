@@ -1,5 +1,6 @@
 using FManagement.Services.QuangND;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FManagement.RazorWepApp.QuangND.Hubs;
 
 internal class Program
 {
@@ -9,6 +10,7 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddRazorPages();
+        builder.Services.AddSignalR();
         builder.Services.AddScoped<IProductPlanQuangNDService, ProductPlanQuangNDService>();
         builder.Services.AddScoped<StoreOrderItemQuangNDService>();
         builder.Services.AddScoped<SystemAccountService>();
@@ -38,6 +40,8 @@ internal class Program
         app.MapRazorPages();
         
         app.MapRazorPages().RequireAuthorization();
+        
+        app.MapHub<ProductionPlanHub>("/productionPlanHub");
 
         app.Run();
     }
