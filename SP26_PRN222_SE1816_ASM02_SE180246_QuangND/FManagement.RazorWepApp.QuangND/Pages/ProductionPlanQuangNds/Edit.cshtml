@@ -1,0 +1,90 @@
+﻿@page
+@model FManagement.RazorWepApp.QuangND.Pages.ProductionPlanQuangNds.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProductionPlanQuangNd</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductionPlanQuangNd.PlanId" />
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.StoreOrderItemId" class="control-label"></label>
+                <select asp-for="ProductionPlanQuangNd.StoreOrderItemId" class="form-control" asp-items="ViewBag.StoreOrderItemId" ></select>
+                <span asp-validation-for="ProductionPlanQuangNd.StoreOrderItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.KitchenId" class="control-label"></label>
+                <select asp-for="ProductionPlanQuangNd.KitchenId" class="form-control" asp-items="ViewBag.KitchenId" ></select>
+                <span asp-validation-for="ProductionPlanQuangNd.KitchenId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.PlanDate" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.PlanDate" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.PlanDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.StartTime" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.StartTime" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.EndTime" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.EndTime" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.PlanStatus" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.PlanStatus" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.PlanStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.PriorityLevel" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.PriorityLevel" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.PriorityLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.TotalExpectedQuantity" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.TotalExpectedQuantity" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.TotalExpectedQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.ActualProducedQuantity" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.ActualProducedQuantity" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.ActualProducedQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.BatchNotes" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.BatchNotes" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.BatchNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductionPlanQuangNd.LastModifiedBy" class="control-label"></label>
+                <input asp-for="ProductionPlanQuangNd.LastModifiedBy" class="form-control" />
+                <span asp-validation-for="ProductionPlanQuangNd.LastModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ProductionPlanQuangNd.IsDeleted" /> @Html.DisplayNameFor(model => model.ProductionPlanQuangNd.IsDeleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

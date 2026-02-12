@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36908.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FManagement.RazorWepApp.QuangND", "FManagement.RazorWepApp.QuangND\FManagement.RazorWepApp.QuangND.csproj", "{12D3E6BC-8FAA-4E2F-BE7C-C1792D5811B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FManagement.Entities.QuangND", "..\..\..\..\FPTSupport\FranchiseManagement\SP26_PRN222_SE1816_ASM01_SE180246_QuangND\FManagement.Entities.QuangND\FManagement.Entities.QuangND.csproj", "{221229E5-5149-3359-79C9-7EDD0E756CAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FManagement.Repositories.QuangND", "..\..\..\..\FPTSupport\FranchiseManagement\SP26_PRN222_SE1816_ASM01_SE180246_QuangND\FManagement.Repositories.QuangND\FManagement.Repositories.QuangND.csproj", "{98E44EA2-021A-6482-0DF8-196304CE94B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FManagement.Services.QuangND", "..\..\..\..\FPTSupport\FranchiseManagement\SP26_PRN222_SE1816_ASM01_SE180246_QuangND\FManagement.Services.QuangND\FManagement.Services.QuangND.csproj", "{8FE856A6-FD31-4D24-34FD-BEB52D592E11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12D3E6BC-8FAA-4E2F-BE7C-C1792D5811B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D3E6BC-8FAA-4E2F-BE7C-C1792D5811B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D3E6BC-8FAA-4E2F-BE7C-C1792D5811B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D3E6BC-8FAA-4E2F-BE7C-C1792D5811B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{221229E5-5149-3359-79C9-7EDD0E756CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221229E5-5149-3359-79C9-7EDD0E756CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221229E5-5149-3359-79C9-7EDD0E756CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221229E5-5149-3359-79C9-7EDD0E756CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E44EA2-021A-6482-0DF8-196304CE94B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E44EA2-021A-6482-0DF8-196304CE94B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E44EA2-021A-6482-0DF8-196304CE94B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E44EA2-021A-6482-0DF8-196304CE94B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE856A6-FD31-4D24-34FD-BEB52D592E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE856A6-FD31-4D24-34FD-BEB52D592E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE856A6-FD31-4D24-34FD-BEB52D592E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE856A6-FD31-4D24-34FD-BEB52D592E11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {330CB396-B87B-4EBD-AF23-A88E1C8F6FDF}
+	EndGlobalSection
+EndGlobal
