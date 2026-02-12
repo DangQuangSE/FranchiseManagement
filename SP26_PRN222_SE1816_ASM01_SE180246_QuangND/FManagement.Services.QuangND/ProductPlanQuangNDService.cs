@@ -65,11 +65,15 @@ namespace FManagement.Services.QuangND
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<ProductionPlanQuangNd>> SearchAsync(int id, int quantityOrdered, string PlanStatus)
+        public async Task<List<ProductionPlanQuangNd>> SearchAsync(
+            string? planStatus,
+            DateOnly? fromDate,
+            DateOnly? toDate,
+            int? productId)
         {
             try
             {
-                return await _productionPlanQuangNDRepository.SearchAsync(id, quantityOrdered, PlanStatus);
+                return await _productionPlanQuangNDRepository.SearchAsync(planStatus, fromDate, toDate, productId);
             }
             catch (Exception e)
             {

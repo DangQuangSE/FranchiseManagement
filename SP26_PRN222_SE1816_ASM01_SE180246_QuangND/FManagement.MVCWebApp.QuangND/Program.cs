@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //// Add dependency injections (DI) for QuangND services
 builder.Services.AddScoped<IProductPlanQuangNDService, ProductPlanQuangNDService>();
+builder.Services.AddScoped<ICentralKitchenService, CentralKitchenService>();
 builder.Services.AddScoped<SystemAccountService>();
 builder.Services.AddScoped<StoreOrderItemQuangNDService>();
 // Configure cookie authentication

@@ -18,7 +18,10 @@ namespace FManagement.Repositories.QuangND
             var items = await _context.ProductionPlanQuangNds
             .Include(p => p.Kitchen)
             .Include(p => p.StoreOrderItem)
-            .Include(p => p.ProductBatches).ToListAsync();
+                .ThenInclude(s => s.Product)
+            .Include(p => p.ProductBatches)
+            .Where(p => !p.IsDeleted)
+            .ToListAsync();
             return items ?? new List<ProductionPlanQuangNd>();
         }
         public async Task<ProductionPlanQuangNd> GetByIdAysnc(int id)
@@ -26,20 +29,28 @@ namespace FManagement.Repositories.QuangND
             var item = await _context.ProductionPlanQuangNds
             .Include(p => p.Kitchen)
             .Include(p => p.StoreOrderItem)
+                .ThenInclude(s => s.Product)
             .Include(p => p.ProductBatches)
             .FirstOrDefaultAsync(p => p.PlanId == id);
             return item ?? new ProductionPlanQuangNd();
         }
-        public async Task<List<ProductionPlanQuangNd>> SearchAsync(int id, int quantityOrdered, string? planStatus)
+        public async Task<List<ProductionPlanQuangNd>> SearchAsync(
+            string? planStatus,
+            DateOnly? fromDate,         
+            DateOnly? toDate,
+            int? productId)
         {
             return await _context.ProductionPlanQuangNds
                 .Include(p => p.Kitchen)
                 .Include(p => p.StoreOrderItem)
+                    .ThenInclude(s => s.Product)
                 .Include(p => p.ProductBatches)
                 .Where(p =>
-                    (id <= 0 || p.PlanId == id) &&
-                    (quantityOrdered <= 0 || (p.StoreOrderItem != null && p.StoreOrderItem.QuantityOrdered == quantityOrdered)) &&
-                    (string.IsNullOrWhiteSpace(planStatus) || (p.PlanStatus != null && p.PlanStatus.Contains(planStatus)))
+                    !p.IsDeleted &&
+                    (string.IsNullOrWhiteSpace(planStatus) || p.PlanStatus == planStatus) &&
+                    (!fromDate.HasValue || p.PlanDate >= fromDate.Value) &&
+                    (!toDate.HasValue || p.PlanDate <= toDate.Value) &&
+                    (!productId.HasValue || productId <= 0 || p.StoreOrderItem.ProductId == productId)
                 )
                 .ToListAsync();
         }
