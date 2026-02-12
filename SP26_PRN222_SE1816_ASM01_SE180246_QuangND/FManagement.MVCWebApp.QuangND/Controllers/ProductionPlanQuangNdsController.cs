@@ -79,7 +79,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
 
 
         // GET: ProductionPlanQuangNds/Create
-        [Authorize(Roles ="1,2")]
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Create()
         {
             await PopulateDropdownsAsync();
@@ -110,6 +110,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
 
 
         // GET: ProductionPlanQuangNds/Edit/5
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -131,6 +132,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Edit(ProductionPlanQuangNd productionPlanQuangNd)
         {
             if (ModelState.IsValid)
@@ -145,7 +147,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
                 }
                 catch (Exception e)
                 {
-                    throw new Exception(e.Message);
+                    ModelState.AddModelError("", "Unable to save changes. Please try again.");
                 }
             }
             await PopulateDropdownsAsync(productionPlanQuangNd);
@@ -153,6 +155,7 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
         }
 
         // GET: ProductionPlanQuangNds/Delete/5
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -172,10 +175,11 @@ namespace FManagement.MVCWebApp.QuangND.Controllers
         // POST: ProductionPlanQuangNds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var result = await _productPlanQuangNDService.DeleteAsync(id);
-            if(result == false)
+            if (result == false)
             {
                 return RedirectToAction(nameof(Delete), new { id = id });   
             }

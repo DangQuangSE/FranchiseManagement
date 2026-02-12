@@ -11,7 +11,7 @@ namespace FManagement.Services.QuangND
     {
         // Query methods:
         Task<List<ProductionPlanQuangNd>> GetAllAsync();
-        Task<ProductionPlanQuangNd> GetByIdAysnc(int id);
+        Task<ProductionPlanQuangNd?> GetByIdAysnc(int id);
         Task<List<ProductionPlanQuangNd>> SearchAsync(
             string? planStatus,
             DateOnly? fromDate,
