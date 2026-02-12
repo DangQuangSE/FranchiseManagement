@@ -25,23 +25,54 @@
     </div>
 
     <!-- Filter & Search Section -->
-    <div class="row mb-3">
-        <div class="col-md-6 col-lg-4">
-            <div class="input-group">
-                <span class="input-group-text bg-white">
-                    <i class="bi bi-search"></i>
-                </span>
-                <input type="text" id="searchInput" class="form-control" placeholder="Search plans...">
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <select id="statusFilter" class="form-select">
-                <option value="">All Status</option>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-            </select>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-flag"></i> Plan Status
+                        </label>
+                        <select name="planStatus" class="form-select">
+                            <option value="">All Status</option>
+                            <option value="Pending" selected="@(ViewData["CurrentStatus"]?.ToString() == "Pending")">Pending</option>
+                            <option value="In Progress" selected="@(ViewData["CurrentStatus"]?.ToString() == "In Progress")">In Progress</option>
+                            <option value="Completed" selected="@(ViewData["CurrentStatus"]?.ToString() == "Completed")">Completed</option>
+                            <option value="Cancelled" selected="@(ViewData["CurrentStatus"]?.ToString() == "Cancelled")">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-calendar-event"></i> From Date
+                        </label>
+                        <input type="date" name="fromDate" class="form-control" value="@ViewData["CurrentFromDate"]" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-calendar-event"></i> To Date
+                        </label>
+                        <input type="date" name="toDate" class="form-control" value="@ViewData["CurrentToDate"]" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-box"></i> Product
+                        </label>
+                        <select name="productId" class="form-select" asp-items="@(ViewData["Products"] as SelectList)">
+                            <option value="">All Products</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> Clear
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -59,7 +90,7 @@
                             <th class="text-center">Expected Qty</th>
                             <th class="text-center">Produced Qty</th>
                             <th>Kitchen</th>
-                            <th>Order Item</th>
+                            <th>Product</th>
                             <th>Notes</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -134,7 +165,9 @@
                                         @(item.Kitchen?.KitchenName ?? "N/A")
                                     </td>
                                     <td>
-                                        <span class="badge bg-light text-dark">#@item.StoreOrderItem?.OrderItemId</span>
+                                        <span class="badge bg-light text-dark">
+                                            @(item.StoreOrderItem?.Product?.ProductName ?? "N/A")
+                                        </span>
                                     </td>
                                     <td>
                                         <small class="text-muted">@(item.BatchNotes ?? "-")</small>
@@ -189,7 +222,7 @@
     <script>
         $(function() {
             $('#myTable').createTablePagination({
-                rowPerPage: 2,
+                rowPerPage: 5,
             });
         });
     </script>
@@ -231,19 +264,6 @@
         .badge {
             padding: 0.4em 0.65em;
             font-weight: 500;
-        }
-
-        .input-group-text {
-            border-right: none;
-        }
-
-        #searchInput {
-            border-left: none;
-        }
-
-        #searchInput:focus {
-            border-color: #ced4da;
-            box-shadow: none;
         }
 
         .card {

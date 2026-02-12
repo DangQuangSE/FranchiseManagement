@@ -1,87 +1,148 @@
 ﻿@model FManagement.Entities.QuangND.Entities.ProductionPlanQuangNd
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Production Plan";
 }
 
-<h1>Edit</h1>
-
-<h4>ProductionPlanQuangNd</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PlanId" />
-            <div class="form-group">
-                <label asp-for="StoreOrderItemId" class="control-label"></label>
-                <select asp-for="StoreOrderItemId" class="form-control" asp-items="ViewBag.StoreOrderItemId"></select>
-                <span asp-validation-for="StoreOrderItemId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KitchenId" class="control-label"></label>
-                <select asp-for="KitchenId" class="form-control" asp-items="ViewBag.KitchenId"></select>
-                <span asp-validation-for="KitchenId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlanDate" class="control-label"></label>
-                <input asp-for="PlanDate" class="form-control" />
-                <span asp-validation-for="PlanDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlanStatus" class="control-label"></label>
-                <input asp-for="PlanStatus" class="form-control" />
-                <span asp-validation-for="PlanStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PriorityLevel" class="control-label"></label>
-                <input asp-for="PriorityLevel" class="form-control" />
-                <span asp-validation-for="PriorityLevel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalExpectedQuantity" class="control-label"></label>
-                <input asp-for="TotalExpectedQuantity" class="form-control" />
-                <span asp-validation-for="TotalExpectedQuantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ActualProducedQuantity" class="control-label"></label>
-                <input asp-for="ActualProducedQuantity" class="form-control" />
-                <span asp-validation-for="ActualProducedQuantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BatchNotes" class="control-label"></label>
-                <input asp-for="BatchNotes" class="form-control" />
-                <span asp-validation-for="BatchNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastModifiedBy" class="control-label"></label>
-                <input asp-for="LastModifiedBy" class="form-control" />
-                <span asp-validation-for="LastModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-1">
+                <i class="bi bi-pencil-square text-primary"></i> Edit Production Plan
+            </h2>
+            <p class="text-muted">Update the production plan details</p>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <input type="hidden" asp-for="PlanId" />
+                
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-md-6">
+                        <h5 class="text-primary mb-3"><i class="bi bi-info-circle"></i> Basic Information</h5>
+                        
+                        <div class="mb-3">
+                            <label asp-for="StoreOrderItemId" class="form-label fw-semibold">
+                                <i class="bi bi-cart"></i> Store Order Item <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="StoreOrderItemId" class="form-select" asp-items="@(ViewData["StoreOrderItemId"] as SelectList)">
+                                <option value="">-- Select Order Item --</option>
+                            </select>
+                            <span asp-validation-for="StoreOrderItemId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="KitchenId" class="form-label fw-semibold">
+                                <i class="bi bi-building"></i> Central Kitchen <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="KitchenId" class="form-select" asp-items="@(ViewData["KitchenId"] as SelectList)">
+                                <option value="">-- Select Kitchen --</option>
+                            </select>
+                            <span asp-validation-for="KitchenId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PlanDate" class="form-label fw-semibold">
+                                <i class="bi bi-calendar"></i> Plan Date <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="PlanDate" type="date" class="form-control" />
+                            <span asp-validation-for="PlanDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="StartTime" class="form-label fw-semibold">
+                                    <i class="bi bi-clock"></i> Start Time
+                                </label>
+                                <input asp-for="StartTime" type="datetime-local" class="form-control" />
+                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="EndTime" class="form-label fw-semibold">
+                                    <i class="bi bi-clock-fill"></i> End Time
+                                </label>
+                                <input asp-for="EndTime" type="datetime-local" class="form-control" />
+                                <span asp-validation-for="EndTime" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-md-6">
+                        <h5 class="text-primary mb-3"><i class="bi bi-gear"></i> Plan Details</h5>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PlanStatus" class="form-label fw-semibold">
+                                    <i class="bi bi-flag"></i> Status
+                                </label>
+                                <select asp-for="PlanStatus" class="form-select" asp-items="@(ViewData["PlanStatusList"] as SelectList)">
+                                    <option value="">-- Select Status --</option>
+                                </select>
+                                <span asp-validation-for="PlanStatus" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PriorityLevel" class="form-label fw-semibold">
+                                    <i class="bi bi-exclamation-triangle"></i> Priority
+                                </label>
+                                <select asp-for="PriorityLevel" class="form-select" asp-items="@(ViewData["PriorityLevelList"] as SelectList)">
+                                    <option value="">-- Select Priority --</option>
+                                </select>
+                                <span asp-validation-for="PriorityLevel" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="TotalExpectedQuantity" class="form-label fw-semibold">
+                                    <i class="bi bi-box"></i> Expected Quantity
+                                </label>
+                                <input asp-for="TotalExpectedQuantity" type="number" class="form-control" min="0" />
+                                <span asp-validation-for="TotalExpectedQuantity" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ActualProducedQuantity" class="form-label fw-semibold">
+                                    <i class="bi bi-box-seam"></i> Produced Quantity
+                                </label>
+                                <input asp-for="ActualProducedQuantity" type="number" class="form-control" min="0" />
+                                <span asp-validation-for="ActualProducedQuantity" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BatchNotes" class="form-label fw-semibold">
+                                <i class="bi bi-sticky"></i> Batch Notes
+                            </label>
+                            <textarea asp-for="BatchNotes" class="form-control" rows="3" placeholder="Enter any notes..."></textarea>
+                            <span asp-validation-for="BatchNotes" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input class="form-check-input" asp-for="IsDeleted" />
+                            <label class="form-check-label" asp-for="IsDeleted">
+                                <i class="bi bi-trash"></i> Mark as Deleted
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-check-circle"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

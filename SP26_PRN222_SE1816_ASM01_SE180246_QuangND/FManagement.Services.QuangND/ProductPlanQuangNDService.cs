@@ -29,9 +29,12 @@ namespace FManagement.Services.QuangND
             try
             {
                 var item = await _productionPlanQuangNDRepository.GetByIdAysnc(id);
-                if (item != null)
+                if (item != null && item.PlanId > 0)
                 {
-                    return await _productionPlanQuangNDRepository.RemoveAsync(item);
+                    // Soft Delete: chỉ đánh dấu IsDeleted = true
+                    item.IsDeleted = true;
+                    var result = await _productionPlanQuangNDRepository.UpdateAsync(item);
+                    return result > 0;
                 }
             }
             catch (Exception e)
@@ -54,7 +57,7 @@ namespace FManagement.Services.QuangND
 
         }
 
-        public async Task<ProductionPlanQuangNd> GetByIdAysnc(int id)
+        public async Task<ProductionPlanQuangNd?> GetByIdAysnc(int id)
         {
             try
             {
@@ -65,11 +68,15 @@ namespace FManagement.Services.QuangND
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<ProductionPlanQuangNd>> SearchAsync(int id, int quantityOrdered, string PlanStatus)
+        public async Task<List<ProductionPlanQuangNd>> SearchAsync(
+            string? planStatus,
+            DateOnly? fromDate,
+            DateOnly? toDate,
+            int? productId)
         {
             try
             {
-                return await _productionPlanQuangNDRepository.SearchAsync(id, quantityOrdered, PlanStatus);
+                return await _productionPlanQuangNDRepository.SearchAsync(planStatus, fromDate, toDate, productId);
             }
             catch (Exception e)
             {
